@@ -1,0 +1,67 @@
+{
+	"name": "Notebook1",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "sparkPool0708",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "23e10714-f773-4c6c-bf4d-f9bedb244d0f"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/5905b707-61fb-4c65-998c-545787feac1d/resourceGroups/dpcert0708/providers/Microsoft.Synapse/workspaces/synapse0708/bigDataPools/sparkPool0708",
+				"name": "sparkPool0708",
+				"type": "Spark",
+				"endpoint": "https://synapse0708.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkPool0708",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.3",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"df = spark.read.load('abfss://datafiles@adlsstorage0708.dfs.core.windows.net/NYCTripSmall.parquet', format='parquet')\n",
+					"\n",
+					"spark.sql(\"CREATE DATABASE IF NOT EXISTS nyctxi\")\n",
+					"df.write.mode(\"overwrite\").saveAsTable(\"nyctrip\")\n",
+					""
+				],
+				"execution_count": 3
+			}
+		]
+	}
+}
